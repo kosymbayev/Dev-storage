@@ -1,7 +1,7 @@
 const logo = document.querySelector(".logo");
 const sections = document.querySelectorAll("section");
 
-function getCurrentSection() 
+function getCurrentSection()//Получаю значение скролла, какая текущая секция
 {
     const scrollY = window.pageYOffset || document.documentElement.scrollTop;
 
@@ -27,7 +27,7 @@ window.addEventListener("scroll", function()
     {
         logo.innerHTML = 'Storage'
     } 
-    else 
+    else //Ставлю название проекта в шапку
     {
         logo.innerHTML = currentSection.getAttribute("title");
     }
