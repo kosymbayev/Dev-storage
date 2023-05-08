@@ -8,7 +8,7 @@ function getCurrentSection()//Получаю значение скролла, к
     for (let i = sections.length - 1; i >= 0; i--) 
     {
         const section = sections[i];
-        const sectionTop = section.offsetTop;
+        const sectionTop = section.offsetTop-2;
         const sectionBottom = section.offsetTop + section.offsetHeight;
 
         if (scrollY >= sectionTop && scrollY < sectionBottom) 
