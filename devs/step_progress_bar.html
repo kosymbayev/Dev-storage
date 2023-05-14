@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Step Progress Bar</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+        integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<style>
+body 
+{
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    align-items: center;
+}
+.container 
+{
+    text-align: center;
+}
+.progress-container 
+{
+    width: 500px;
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+}
+.progress-bar-back 
+{
+    position: absolute;
+    height: 4px;
+    width: 100%;
+    background-color: lightgray;
+    border: none;
+    z-index: -1;
+    margin: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.progress-bar-front 
+{
+    position: absolute;
+    height: 4px;
+    width: 0%;
+    background-color: green;
+    border: none;
+    z-index: -1;
+    margin: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: 0.4s linear width;
+}
+.step 
+{
+    width: 30px;
+    height: 30px;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 4px solid lightgray;
+    color: lightgray;
+}
+.step.checked 
+{
+    color: green;
+    border-color: green;
+    transition: all 0.4s linear;
+    transition-delay: 0.3s;
+}
+.step.checked small 
+{
+    position: absolute;
+    bottom: -20px;
+    font-family: cursive;
+}
+
+.btn 
+{
+    background-color: slateblue;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    margin: 70px 10px 0;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn:hover 
+{
+    opacity: 0.9;
+}
+.btn:active 
+{
+    transform: scale(0.97);
+}
+.btn:disabled 
+{
+    background-color: lightgray;
+}
+
+@media (max-width: 500px) 
+{
+    .progress-container 
+    {
+        width: 90vw;
+    }
+}
+</style>
+<body>
+    <div class="container">
+        <div class="progress-container">
+            <hr class="progress-bar-back" />
+            <hr class="progress-bar-front" />
+            <div class="step checked">
+                <i class="fas fa-check"></i>
+                <small>Start</small>
+            </div>
+            <div class="step">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="step">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="step">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="step">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <button class="btn" id="prev" disabled>
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <button class="btn" id="next"><i class="fas fa-arrow-right"></i></button>
+    </div>
+
+    <script>
+        const nextEl = document.getElementById("next");
+        const prevEl = document.getElementById("prev");
+
+        const progressEl = document.querySelector(".progress-bar-front");
+
+        const stepsEl = document.querySelectorAll(".step");
+
+        let currentChecked = 1;
+
+        nextEl.addEventListener("click", () => {
+            currentChecked++;
+            if (currentChecked > stepsEl.length) {
+                currentChecked = stepsEl.length;
+            }
+            updateStepProgress();
+        });
+
+        prevEl.addEventListener("click", () => {
+            currentChecked--;
+            if (currentChecked < 1) {
+                currentChecked = 1;
+            }
+            updateStepProgress();
+        });
+
+        function updateStepProgress() {
+            stepsEl.forEach((stepEl, idx) => {
+                if (idx < currentChecked) {
+                    stepEl.classList.add("checked");
+                    stepEl.innerHTML = `
+                        <i class="fas fa-check"></i>
+                        <small>${idx === 0
+                            ? "Start"
+                            : idx === stepsEl.length - 1
+                                ? "Final"
+                                : "Step " + idx
+                        }</small>
+                    `;
+                } else {
+                    stepEl.classList.remove("checked");
+                    stepEl.innerHTML = `
+                        <i class="fas fa-times"></i>
+                        `;
+                }
+            });
+
+            const checkedNumber = document.querySelectorAll(".checked");
+
+            progressEl.style.width =
+                ((checkedNumber.length - 1) / (stepsEl.length - 1)) * 100 + "%";
+
+            if (currentChecked === 1) {
+                prevEl.disabled = true;
+            } else if (currentChecked === stepsEl.length) {
+                nextEl.disabled = true;
+            } else {
+                prevEl.disabled = false;
+                nextEl.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
