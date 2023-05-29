@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Circular progress bar</title>
+</head>
+<style>
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'montserrat', sans-serif;
+}
+body
+{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #192021;
+}
+.container
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 30px;
+    width: 420px;
+    padding: 50px 0;
+    border-radius: 8px;
+    background: #fff;
+}
+.circular_progress
+{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 250px;
+    width: 250px;
+    border-radius: 50%;
+    background: conic-gradient(#192021 3.6deg, #ededed 0deg);
+}
+.circular_progress::before
+{
+    content: '';
+    position: absolute;
+    height: 210px;
+    width: 210px;
+    border-radius: 50%;
+    background-color: #fff;
+}
+.progress_value
+{
+    position: relative;
+    font-size: 50px;
+    font-weight: 600;
+    color: #192021;
+}
+.text
+{
+    font-size: 30px;
+    font-weight: 500;
+    color: #192021;
+}
+
+button
+{
+    border: 2px solid #192021;
+    color: #192021;
+    background-color: #fff;
+    padding: 10px 18px;
+    font-size: 24px;
+    font-weight: 500;
+    border-radius: 20px;
+    cursor: pointer;
+}
+</style>
+<body>
+
+    <div class="container">
+        <div class="circular_progress js_circular_progress">
+            <span class="progress_value js_progress_value">0%</span>
+        </div>
+
+        <span class='text'>Progress</span>
+
+        <button onclick='restart()'>Restart</button>
+    </div>
+
+    <script>
+        let circularProgress = document.querySelector('.js_circular_progress');
+        let progressValue = document.querySelector('.js_progress_value');
+
+        function restart()
+        {
+            let progressStartValue = 0;
+            let progressEndValue = 69;
+            let speed = 10;
+
+            let progress = setInterval(() => {
+                progressStartValue++;
+
+                progressValue.textContent =`${progressStartValue}%`;
+                circularProgress.style.background = `conic-gradient(#192021 ${progressStartValue * 3.6}deg, #ededed 0deg)`;
+
+                if( progressStartValue == progressEndValue )
+                {
+                    clearInterval(progress);
+                }
+            }, speed)
+        }
+
+        restart();
+    </script>
+
+</body>
+</html>
