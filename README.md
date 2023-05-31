@@ -25,3 +25,4 @@ Little developments in one rep
 | 19 | [Stop watch](https://kosymbayev.github.io/Developments-storage/other.html#stop_watch) |
 | 20 | [Code editor](https://kosymbayev.github.io/Developments-storage/other.html#code_editor) |
 | 21 | [Progress bar](https://kosymbayev.github.io/Developments-storage/other.html#progress_bar) |
+| 22 | [Drag & drop](https://kosymbayev.github.io/Developments-storage/other.html#drag_drop) |
