@@ -27,3 +27,5 @@ Little developments in one rep
 | 21 | [Progress bar](https://kosymbayev.github.io/Developments-storage/other.html#progress_bar) |
 | 22 | [Drag & drop](https://kosymbayev.github.io/Developments-storage/other.html#drag_drop) |
 | 23 | [Image search app](https://kosymbayev.github.io/Developments-storage/api.html#image_search_app) |
+| 24 | [Scroll indecator](https://kosymbayev.github.io/Developments-storage/devs/scroll_indicator.html) |
+| 25 | [Tabs](https://kosymbayev.github.io/Developments-storage/devs/tabs.html) |
