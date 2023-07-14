@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toggle switch</title>
+</head>
+<style>
+    *
+    {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: sans-serif;
+    }
+    body 
+    {
+        --input-width: 200px;
+        --input-height: 100px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: #f2eee3;
+    }
+
+    input[type=checkbox]
+    {
+        height: 0;
+        width: 0;
+        visibility: hidden;
+    }
+
+    label 
+    {
+        position: relative;
+        display: block;
+        width: var(--input-width);
+        height: var(--input-height);
+        border-radius: 100px;
+        background: grey;
+        cursor: pointer;
+    }
+    label:after
+    {
+        content: '';
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        width: calc(var(--input-height) - 10px);
+        height: calc(var(--input-height) - 10px);
+        background: #f2eee3;
+        border-radius: calc(var(--input-height) - 10px);
+        transition: 0.3s;
+    }
+
+    input:checked + label 
+    {
+        background: #bada53;
+    }
+    input:checked + label:after
+    {
+        left: calc(100% - 5px);
+        transform: translateX(-100%);
+    }
+    label:active:after
+    {
+        /*width: calc(var(--input-height) + 30px);*/
+    }
+    
+</style>
+<body>
+    <input type="checkbox" id="switch">
+    <label for="switch"></label>
+</body>
+</html>
