@@ -1,10 +1,5 @@
 //VAR
-:root
-{
-    --background_color: #202123
-
-    --header_height: 50px
-}
+container_width = 1460px
 
 // GENERAL
 *
@@ -16,14 +11,9 @@
 body
     font-family 'montserrat', sans-serif;
     font-size 16px
-    background var(--background_color)
+    background #202123
 a
     text-decoration none
-
-.container
-    max-width 1460px
-    padding 0 20px
-    margin 0 auto
 
 // HEADER
 .header
@@ -31,7 +21,7 @@ a
     position -webkit-sticky
     top 0
     width 100%
-    background-color rgba(32, 33, 35, 0.93)
+    background-color rgba(32, 33, 35, 0.8)
     backdrop-filter: blur(12px);
     color #fff
     z-index 10
@@ -39,10 +29,13 @@ a
         color #fff
 
     .container
+        max-width container_width
+        padding 20px 16px
+        margin 0 auto
+
         display flex
         justify-content space-between
         align-items center
-        height var(--header_height)
     .logo
         text-transform: uppercase;
         font-size: 22px;
@@ -52,10 +45,18 @@ a
         display: flex;
         gap: 20px;
         align-items: center;
+
+    @media screen and (max-width: 460px)
+        .container
+            flex-direction: column;
+            gap: 10px;
+            align-items: baseline;
         
 // MAIN
 main
-    background var(--background_color)
+    max-width container_width
+    padding 0 16px
+    margin 0 auto
     a
         color #fff
 
@@ -64,44 +65,45 @@ main
         justify-content center
         align-items center
         width 100%
-        min-height calc(100vh - var(--header_height))
 
     .links
         display flex
+        flex-wrap: wrap;
         gap 26px
     ul
         list-style none
     li
         padding 4px 0
-    li.title
-        font-size 1.4rem
+        &.title
+            font-size 1.4rem
+        &:not(.title)
+            opacity .7
+            &:hover
+                opacity 1
 
 // PAGES
+.devs
+    display: grid
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))
+    gap 15px
+    padding 0 16px
+    max-width: 1460px;
+    margin 0 auto
+    
 section
     position relative
     width 100%
-    min-height calc(100vh/* - var(--header_height)*/)
 
-    .download
-        position absolute
-        top 20px
-        right 20px
-        width 30px
-        height 30px
-        background-image: url(../img/download.png);
-        background-size: 22px;
-        background-repeat: no-repeat;
-        background-color: #fff;
-        background-position: center;
-        border-radius: 4px;
-        opacity: 0.4;
-        cursor pointer
-        z-index 2
-        transition opacity .4s ease
+    img
+        width: 100%;
+        border-radius: 12px;
+
+    .link
+        width: fit-content;
+        display: block;
+        padding: 8px
+        font-size: 18px;
+        color: #fff;
+        opacity .7
         &:hover
             opacity 1
-
-iframe
-    width 100%
-    min-height calc(100vh/* - var(--header_height)*/)
-    

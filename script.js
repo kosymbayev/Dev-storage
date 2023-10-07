@@ -1,34 +1,45 @@
-const logo = document.querySelector(".logo");
-const sections = document.querySelectorAll("section");
+document.addEventListener('DOMContentLoaded', () => {
 
-function getCurrentSection()//Получаю значение скролла, какая текущая секция
-{
-    const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-
-    for (let i = sections.length - 1; i >= 0; i--) 
+    function showAlertOnFirstVisit() 
     {
-        const section = sections[i];
-        const sectionTop = section.offsetTop-2;
-        const sectionBottom = section.offsetTop + section.offsetHeight;
-
-        if (scrollY >= sectionTop && scrollY < sectionBottom) 
+        const hasVisitedBefore = localStorage.getItem('hasVisited');
+        if( !hasVisitedBefore ) 
         {
-            return section;
+            alert('To play the video, hover over the image\n\nЧтобы воспроизвести видео наведитесь на картинку');
+
+            localStorage.setItem('hasVisited', 'true');
         }
     }
-}
 
-window.addEventListener("scroll", function() 
-{
-    const currentSection = getCurrentSection();
-    //console.log("Current section:", currentSection);
 
-    if (currentSection === undefined) 
+    function handleHover( event ) 
     {
-        logo.innerHTML = 'Storage'
-    } 
-    else //Ставлю название проекта в шапку
-    {
-        logo.innerHTML = currentSection.getAttribute("title");
+        const img = event.target;
+        const currentSrc = img.src;
+
+        let newSrc;
+        if( currentSrc.includes("/img/") && currentSrc.endsWith('.png') )
+        {
+            newSrc = currentSrc.replace("/img/", "/gifs/").replace('.png', '.gif');
+        }
+        else if( currentSrc.includes("/gifs/") && currentSrc.endsWith('.gif') )
+        {
+            newSrc = currentSrc.replace("/gifs/", "/img/").replace('.gif', '.png');
+        }
+        else 
+        {
+            return;
+        }
+
+        img.src = newSrc;
     }
-});
+
+    showAlertOnFirstVisit()// Вызываем функцию показа алерта на первом визите
+
+    const sectionImages = document.querySelectorAll('section img');
+    sectionImages.forEach((img) => {
+        img.addEventListener('mouseover', handleHover);
+        img.addEventListener('mouseout', handleHover);
+    });
+
+})
