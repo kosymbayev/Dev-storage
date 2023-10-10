@@ -47,3 +47,4 @@ Little devs in one rep
 | 14 | [Drag & drop](https://kosymbayev.github.io/Dev-storage/devs/drag_drop.html) |
 | 15 | [Scroll indicator](https://kosymbayev.github.io/Dev-storage/devs/scroll_indicator.html) |
 | 16 | [Tabs](https://kosymbayev.github.io/Dev-storage/devs/tabs.html) |
+| 17 | [Before & after](https://kosymbayev.github.io/Dev-storage/devs/before_after.html) |
