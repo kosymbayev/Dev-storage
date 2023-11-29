@@ -48,3 +48,5 @@ Little devs in one rep
 | 15 | [Scroll indicator](https://kosymbayev.github.io/Dev-storage/devs/scroll_indicator.html) |
 | 16 | [Tabs](https://kosymbayev.github.io/Dev-storage/devs/tabs.html) |
 | 17 | [Before & after](https://kosymbayev.github.io/Dev-storage/devs/before_after.html) |
+| 18 | [Calculator](https://kosymbayev.github.io/Dev-storage/devs/calculator.html) |
+| 19 | [Internet speed test](https://kosymbayev.github.io/Dev-storage/devs/internet_speed_test.html) |

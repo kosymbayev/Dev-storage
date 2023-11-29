@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Internet Speed Test</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+</head>
+<style>
+    *
+    {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body
+    {
+        font-family: 'Poppins', sans-serif;
+        height: 100vh;
+        background: #202123;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    p
+    {
+        font-weight: 400;
+        color: #747497;
+    }
+    span
+    {
+        font-weight: 400;
+        color: #898931;
+    }
+
+    .container
+    {
+        background: #f3f3f3;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 350px;
+        padding: 0 2em 1em;
+        border-radius: 1em;
+        font-size: 1.2em;
+        line-height: 1.6em;
+        box-shadow: 0 1.6em 2.4em rgba(40, 4, 67, 0.3);
+    }
+    .container .material-symbols-outlined
+    {
+        display: block;
+        font-size: 200px;
+    }
+</style>
+<body>
+    
+    <div class="container">
+        <span class="material-symbols-outlined">network_check</span>
+        <p id="info"><span>...</span></p>
+        <p id="mbs"><span>Speed In Mbs: </span></p>
+        <p id="kbs"><span>Speed In Kbs: </span></p>
+        <p id="bits"><span>Speed In Bits: </span></p>
+    </div>
+
+    <script>
+        let startTime, endTime;
+        let imageSize = '';
+        let image = new Image();
+        const bitSpeed = document.getElementById('bits'),
+            kbSpeed = document.getElementById('kbs'),
+            mbSpeed = document.getElementById('mbs'),
+            info = document.getElementById('info');
+
+        let totalBitSpeed = 0,
+            totalKbSpeed = 0,
+            totalMbSpeed = 0,
+            numTests = 1,
+            testCompleted = 0;
+
+        // Get random image from unsplash.com
+        const imageApi = 'https://source.unsplash.com/random?topic=nature';
+
+        // When image loads
+        image.onload = async function()
+        {
+            endTime = new Date().getTime();
+
+            // Get image size
+            await fetch(imageApi).then((response) => {
+                imageSize = response.headers.get('content-length');
+                calculateSpeed();
+            })
+        }
+
+        // Function to calcilate speed
+        function calculateSpeed()
+        {
+            // Time taken in seconds
+            let timeDuration = (endTime - startTime) / 1000;
+            // Total bits
+            let loadedBits = imageSize * 8;
+            let speedInBts = loadedBits / timeDuration;
+            let speedInKbs = speedInBts / 1024;
+            let speedInMbs = speedInKbs / 1024;
+
+            totalBitSpeed += speedInBts;
+            totalKbSpeed += speedInKbs;
+            totalMbSpeed += speedInMbs;
+
+            testCompleted++;
+
+            // If all tests completed (we get 5 images then calculate average)
+            if( testCompleted === numTests )
+            {
+                let averageSpeedInBps = (totalBitSpeed / numTests).toFixed(2);
+                let averageSpeedInKbps = (totalKbSpeed / numTests).toFixed(2);
+                let averageSpeedInMbps = (totalMbSpeed / numTests).toFixed(2);
+
+                // Display average speeds
+                bitSpeed.innerHTML += `${averageSpeedInBps}`;
+                kbSpeed.innerHTML += `${averageSpeedInKbps}`;
+                mbSpeed.innerHTML += `${averageSpeedInMbps}`;
+                info.innerHTML = 'Test Completed!';
+            }
+            else
+            {
+                // Run the next test
+                startTime = new Date().getTime();
+                image.src = imageApi;
+            }
+        }
+
+        // Imitial function to start tests
+        const init = async () => {
+            info.innerHTML = 'Testing...';
+            startTime = new Date().getTime();
+            image.src = imageApi;
+        }
+
+        // Run tests when window loads
+        window.onload = () => {
+            for( let i = 0; i < numTests; i++ )
+            {
+                init();
+            }
+        }
+    </script>
+</body>
+</html>
