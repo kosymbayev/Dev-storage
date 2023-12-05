@@ -50,3 +50,4 @@ Little devs in one rep
 | 17 | [Before & after](https://kosymbayev.github.io/Dev-storage/devs/before_after.html) |
 | 18 | [Calculator](https://kosymbayev.github.io/Dev-storage/devs/calculator.html) |
 | 19 | [Internet speed test](https://kosymbayev.github.io/Dev-storage/devs/internet_speed_test.html) |
+| 20 | [Gradient generator](https://kosymbayev.github.io/Dev-storage/devs/gradient_generator.html) |
