@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sticky Notes</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<style>
+@import url('https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Handlee&display=swap');
+
+:root
+{
+    --size: 300px;
+}
+
+* 
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+body
+{
+    background: #2f363e;
+}
+.container
+{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 50px;
+    padding: 50px;
+}
+.container .notes
+{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.container .notes .note
+{
+    position: relative;
+    width: var(--size);
+    height: var(--size);
+    background: #f7e98d;
+    padding: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+    font-family: 'Handlee', cursie;
+}
+.container .notes .note::before
+{
+    content: 'Double Click to Remove This Note';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 3px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.85em;
+    opacity: 0;
+    transition: 0.5s;
+}
+.container .notes .note:hover::before
+{
+    opacity: 1;
+}
+#create
+{
+    position: relative;
+    width: var(--size);
+    height: var(--size);
+    background: rgba(255, 255, 255, 0.15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 6em;
+    cursor: pointer;
+}
+#create i
+{
+    position: absolute;
+    color: #fff;
+}
+.createBox
+{
+    position: relative;
+    width: var(--size);
+    height: var(--size);
+    z-index: 1000;
+    display: none;
+}
+.createBox textarea
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--size);
+    height: var(--size);
+    padding: 20px;
+    outline: none;
+    font-size: 0.2em;
+    resize: none;
+}
+.details h3
+{
+    font-family: 'Handlee', cursive;
+    user-select: none;
+    font-size: 1.45em;
+}
+</style>
+<body>
+    <div class="container">
+        <div class="notes">
+            <div id="create">
+                <i class="fa-solid fa-plus"></i>
+                <div class="createBox">
+                    <div class="innerCreateBox">
+                        <textarea placeholder="Write Here ..." id="userInput" maxlength="160"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let createBox = document.querySelector('.createBox')
+        let notes = document.querySelector('.notes')
+        let input = document.querySelector('#userInput')
+
+        let i = 0
+
+        createBox.addEventListener('keydown', createNote)
+
+        document.querySelector('#create').addEventListener('click', () => {
+            createBox.style.display = 'block'
+        })
+
+        function createNote(e) 
+        {
+            if( e.key == 'Enter' || e.key == 'NumpadEnter' )
+            {
+                createDiv(input.value)
+                input.value = ''
+                createBox.style.display = 'none'
+            }
+        }
+
+        function setRandonColor()
+        {
+            let randomColors = ['#c2ff3d', '#ff3de8', '#3dc2ff', '#04e022', '#bc83e6', '#ebb328']
+            if( i > randomColors.length - 1 )
+            {
+                i = 0
+            }
+            return randomColors[i++]
+        }
+
+        function createDiv(text)
+        {
+            let div = document.createElement('div')
+            div.className = 'note'
+            div.innerHTML = `<div class="details"><h3>${text}</h3></div>`
+
+            // remove note
+            div.addEventListener('dblclick', () => {
+                div.remove()
+            })
+
+            // set color
+            div.setAttribute('style', `background: ${setRandonColor()}`)
+            notes.appendChild(div)
+        }
+    </script>
+</body>
+</html>
